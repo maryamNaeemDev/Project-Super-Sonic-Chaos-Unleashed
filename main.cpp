@@ -20,7 +20,7 @@ void draw_player(RenderWindow& window, Sprite& LstillSprite, float player_x, flo
 
 void display_level(RenderWindow& window, const int height, const int width, char** lvl, Sprite& wallSprite1, const int cell_size, Sprite& brickSp1, Sprite& brickSp2, Sprite& brickSp3, Sprite spikeSp);
 
-void movePlayer(float& player_x);
+void movePlayer(float& player_x, float& player_y, float jumpStrength, Clock& delayjump, bool& onGround, float& velocityY, char& bottom_left_down, char& bottom_right_down, char** lvl, char& top_mid_up);
 
 void moveView(View& view, float player_x, float player_y, FloatRect& cameraview);
 int main()
@@ -367,6 +367,15 @@ int main()
 	int hit_box_factor_x = 8 * scale_x;
 	int hit_box_factor_y = 5 * scale_y;
 
+    char top_left_up = lvl[(int)(offset_y + hit_box_factor_y) / cell_size][(int)(player_x + hit_box_factor_x) / cell_size];
+    char top_right_up = lvl[(int)(offset_y + hit_box_factor_y) / cell_size][(int)(player_x + hit_box_factor_x + Pwidth) / cell_size];
+    char top_mid_up = lvl[(int)(offset_y + hit_box_factor_y) / cell_size][(int)(player_x + hit_box_factor_x + Pwidth / 2) / cell_size];
+    char bottom_left_down = lvl[(int)(offset_y + hit_box_factor_y + Pheight) / cell_size][(int)(player_x + hit_box_factor_x) / cell_size];
+    char bottom_right_down = lvl[(int)(offset_y + hit_box_factor_y + Pheight) / cell_size][(int)(player_x + hit_box_factor_x + Pwidth) / cell_size];
+    char bottom_mid_down = lvl[(int)(offset_y + hit_box_factor_y + Pheight) / cell_size][(int)(player_x + hit_box_factor_x + Pwidth / 2) / cell_size];
+
+
+
 	LstillTex.loadFromFile("Data/0right_still.png");
 	LstillSprite.setTexture(LstillTex);
 	LstillSprite.setScale(scale_x, scale_y);
@@ -409,7 +418,7 @@ int main()
 		display_level(window, height, width, lvl, wallSprite1, cell_size, brickSp1, brickSp2, brickSp3, spikeSp);
 		moveView(view, player_x, player_y, cameraview);
 		draw_player(window, LstillSprite, player_x, player_y);
-		movePlayer(player_x);
+		movePlayer(player_x, player_y, jumpStrength, delayjump, onGround, velocityY, bottom_left_down, bottom_right_down, lvl, top_mid_up);
 		window.setView(view);
 		window.display();
 	}
@@ -520,17 +529,24 @@ void display_level(RenderWindow& window, const int height, const int width, char
 		}
 	}
 }
-void movePlayer(float& player_x)
+void movePlayer(float& player_x, float& player_y, float jumpStrength, Clock& delayjump, bool& onGround, float& velocityY, char& bottom_left_down, char& bottom_right_down, char** lvl, char& top_mid_up)
 {
 	Keyboard key;
 	if (key.isKeyPressed(key.Left))
 	{
-		player_x -= 25;
+		player_x -= 8;
 	}
-	else if (key.isKeyPressed(key.Right))
+	else if ( key.isKeyPressed(key.Right))
 	{
-		player_x += 25;
+		player_x += 8;
 	}
+	if (key.isKeyPressed(key.Space) && delayjump.getElapsedTime().asSeconds() > 0.3 && onGround)
+	{
+		velocityY = +jumpStrength; 
+		
+		delayjump.restart();
+	}
+	
 }
 
 
