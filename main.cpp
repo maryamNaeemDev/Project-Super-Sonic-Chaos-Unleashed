@@ -244,7 +244,7 @@ int main()
 			lvl[height - 10][113 + i] = 'w';
              //make it height -1 when fully implementing
 			lvl[height - 2][131 + i] = ' ';
-			lvl[height - 2][131 + i] = ' ';
+			//lvl[height - 2][131 + i] = ' ';
 		/*	lvl[height - 2][187 + i] = ' ';
 			lvl[height - 1][187 + i] = ' ';*/
 		}
@@ -308,22 +308,10 @@ int main()
 		
 
 	}
-
-	//for background, letting every lvl ==s , because background is at every pixel
-	for (int i = 0;i < height;i++)
-	{
-		for (int j = 0; j < width; j++)
-		{
-			lvl[i][j] == 's';
-		}
-	}
-
-	lvl[11][1] = 's';
-	lvl[11][2] = 'w';
-	lvl[11][3] = 'w';
 	//Textures and sprites loading
 	wallTex1.loadFromFile("Data/Bg2.png");
 	wallSprite1.setTexture(wallTex1);
+	
 
 	brickTx1.loadFromFile("Data/brick2.png");
 	brickSp1.setTexture(brickTx1);
@@ -474,19 +462,11 @@ void draw_player(RenderWindow& window, Sprite& LstillSprite, float player_x, flo
 }
 void display_level(RenderWindow& window, const int height, const int width, char** lvl, Sprite& wallSprite1, const int cell_size, Sprite& brickSp1, Sprite& brickSp2, Sprite& brickSp3, Sprite spikeSp)
 {
-	for (int i = 0; i < height; i += 1)
-	{
-		for (int j = 0; j < width; j += 1)
-		{
-			if (lvl[i][j] == 's')
-			{
-				wallSprite1.setPosition(0, 0);  // Position the background tiles properly
-				window.draw(wallSprite1);
-			}
-			
-
-
-		}
+	
+	for (int x = 0; x < 12800; x += 1600) { 
+		
+		wallSprite1.setPosition(x, 0); 
+		window.draw(wallSprite1);
 	}
 	//logic for a random pattern for bricks in last 2 rows
 	//this pattern is repeated in every frame
