@@ -83,7 +83,7 @@ int main()
 	for (int j = 0; j < width; j++)
 	{
 		lvl[0][j] = 'w';
-		for (int k = 0;k < 3;k++)
+		for (int k = 0; k < 3; k++)
 		{
 			lvl[height - 4 - k][14] = 'w';
 		}
@@ -91,14 +91,14 @@ int main()
 		//mainly blocks
 		//in the array the first element is the y axis
 		// the second element is the z axis
-		for (int k = 0;k < 3;k++)
+		for (int k = 0; k < 3; k++)
 		{
 			lvl[height - 6][16 + k] = 'w';
 			lvl[1][16] = 'w';
-			lvl[1][16+1] = 'w';
-			lvl[2][16+1] = 'w';
+			lvl[1][16 + 1] = 'w';
+			lvl[2][16 + 1] = 'w';
 		}
-		for (int k = 0;k < 3;k++)
+		for (int k = 0; k < 3; k++)
 		{
 			lvl[height - 6][20 + k] = 'w';
 			lvl[1][16 + 1] = 'w';
@@ -107,18 +107,18 @@ int main()
 
 		}
 
-		
-		for (int k = 0;k < 3;k++)
+
+		for (int k = 0; k < 3; k++)
 		{
 			lvl[height - 6][25 + k] = 'w';
-			lvl[1][20 ] = 'w';
+			lvl[1][20] = 'w';
 			lvl[1][20 + 1] = 'w';
 			lvl[2][20 + 1] = 'w';
 			lvl[1][20 + 2] = 'w';
-			lvl[10][19+k] = 'p';
+			lvl[10][19 + k] = 'p';
 
 		}
-		for (int k = 0;k < 3;k++)
+		for (int k = 0; k < 3; k++)
 		{
 			lvl[height - 6][31 + k] = 'w';
 
@@ -126,48 +126,48 @@ int main()
 		}
 		//knuckles region
 		//wall breaking
-		for (int k = 0;k < 11;k++)
+		for (int k = 0; k < 11; k++)
 		{
-			lvl[k][34 ] = 'w';
+			lvl[k][34] = 'w';
 			lvl[k][35] = 'w';
 			lvl[k][36] = 'w';
-			
+
 			lvl[k][42] = 'w';
-			
-			for (int i = 0;i < 5;i++)
+
+			for (int i = 0; i < 5; i++)
 			{
 				lvl[1][42] = 'w';
 				lvl[1][37 + i] = 'w';
 				lvl[2][37 + i] = 'w';
-				
-					lvl[height - 4][36] = 'w';
-					if (i < 5)
-					{//spikes in the region
-						lvl[height - 4][37 + i] = 'p';
-					}
 
-				lvl[height-5][36] = 'w';
-				
-				
-					lvl[height - 7][37 + i] = 'w';
-				
+				lvl[height - 4][36] = 'w';
+				if (i < 5)
+				{//spikes in the region
+					lvl[height - 4][37 + i] = 'p';
+				}
+
+				lvl[height - 5][36] = 'w';
+
+
+				lvl[height - 7][37 + i] = 'w';
+
 				lvl[height - 8][39] = 'p';
 				if (i < 4)
 				{
 					lvl[height - 7][42 + i] = 'w';
 
-					lvl[height - 6][42 + i ] = 'w';
+					lvl[height - 6][42 + i] = 'w';
 					lvl[height - 5][42 + i] = 'w';
 					lvl[height - 4][42 + i] = 'w';
 
-				}		
+				}
 				lvl[height - 6][46] = 'w';
 				lvl[height - 5][46] = 'w';
 				lvl[height - 5][47] = 'w';
 				lvl[height - 4][46] = 'w';
 				lvl[height - 4][47] = 'w';
 				lvl[height - 4][48] = 'w';
-				
+
 			}
 			if (k != 1 && k != 2 && k != 3)
 			{
@@ -176,10 +176,10 @@ int main()
 				lvl[k][64] = 'w';
 			}
 
-			
+
 		}
 		// platforms pit beneath
-		for (int i = 0;i < 3;i++)
+		for (int i = 0; i < 3; i++)
 		{
 			lvl[height - 6][51 + i] = 'w';
 			lvl[height - 8][55 + i] = 'w';
@@ -187,7 +187,7 @@ int main()
 			lvl[6][90 + i] = 'w';
 		}
 		//motto bug enemy zone
-		for (int i = 0;i < 9;i++)
+		for (int i = 0; i < 9; i++)
 		{
 			lvl[height - 2][51 + i] = ' ';
 			lvl[height - 1][51 + i] = ' ';
@@ -197,26 +197,26 @@ int main()
 		lvl[height - 1][j] = 'q';
 		lvl[height - 3][j] = 'w';
 		lvl[height - 2][j] = 'q';
-		for (int i = 0;i < 20;i++)
+		for (int i = 0; i < 20; i++)
 		{
 			lvl[1][68 + i] = 'q';
 			lvl[2][68 + i] = 'q';
 		}
-		for (int k = 0;k < 2;k++)
+		for (int k = 0; k < 2; k++)
 		{
 			lvl[height - 8][68 + k] = 'w';
 			lvl[height - 8][73 + k] = 'w';
 			lvl[height - 8][81 + k] = 'w';
 			lvl[height - 8][86 + k] = 'w';
 		}
-		for (int i = 0;i < 11;i++)
+		for (int i = 0; i < 11; i++)
 		{
 			lvl[i][89] = 'q';
 			lvl[i][90] = 'q';
 			lvl[i][88] = 'q';
 		}
 		//all the pits logic here
-		for (int i = 0;i < 15;i++)
+		for (int i = 0; i < 15; i++)
 		{
 			lvl[height - 2][91 + i] = ' ';
 			lvl[height - 1][91 + i] = ' ';
@@ -227,29 +227,29 @@ int main()
 		}
 
 		//stairs for mid level mini boss fight
-		for (int i = 0;i < 7;i++)
+		for (int i = 0; i < 7; i++)
 		{
 			lvl[height - 4][107 + i] = 'w';
-			if(i<6)
-			lvl[height - 5][108 + i] = 'w';
-			if(i<5)
-			lvl[height - 6][109 + i] = 'w';
+			if (i < 6)
+				lvl[height - 5][108 + i] = 'w';
+			if (i < 5)
+				lvl[height - 6][109 + i] = 'w';
 			if (i < 4)
-			lvl[height - 7][110 + i] = 'w';
+				lvl[height - 7][110 + i] = 'w';
 			if (i < 3)
-			lvl[height - 8][111 + i] = 'w';
+				lvl[height - 8][111 + i] = 'w';
 			if (i < 2)
-			lvl[height - 9][112 + i] = 'w';
+				lvl[height - 9][112 + i] = 'w';
 			if (i < 1)
-			lvl[height - 10][113 + i] = 'w';
-             //make it height -1 when fully implementing
+				lvl[height - 10][113 + i] = 'w';
+			//make it height -1 when fully implementing
 			lvl[height - 2][131 + i] = ' ';
 			//lvl[height - 2][131 + i] = ' ';
 		/*	lvl[height - 2][187 + i] = ' ';
 			lvl[height - 1][187 + i] = ' ';*/
 		}
 		//wall breaking pt 2
-		for (int k = 0;k < 11;k++)
+		for (int k = 0; k < 11; k++)
 		{
 			lvl[k][139] = 'w';
 			lvl[k][140] = 'w';
@@ -257,7 +257,7 @@ int main()
 
 			lvl[k][147] = 'w';
 			//42=147
-			for (int i = 0;i < 5;i++)
+			for (int i = 0; i < 5; i++)
 			{
 				lvl[1][147] = 'w';
 				lvl[1][142 + i] = 'w';
@@ -294,24 +294,24 @@ int main()
 
 			}
 			//bees round
-			for (int i = 0;i < 8;i++)
+			for (int i = 0; i < 8; i++)
 			{
-				lvl[4][159+i] = 'q';
-				lvl[5][159+i] = 'q';
+				lvl[4][159 + i] = 'q';
+				lvl[5][159 + i] = 'q';
 			}
 			lvl[6][158] = 'q';
 			lvl[6][167] = 'q';
-			
+
 
 
 		}
-		
+
 
 	}
 	//Textures and sprites loading
 	wallTex1.loadFromFile("Data/Bg2.png");
 	wallSprite1.setTexture(wallTex1);
-	
+
 
 	brickTx1.loadFromFile("Data/brick2.png");
 	brickSp1.setTexture(brickTx1);
@@ -367,14 +367,15 @@ int main()
 	int hit_box_factor_x = 8 * scale_x;
 	int hit_box_factor_y = 5 * scale_y;
 
-    char top_left_up = lvl[(int)(offset_y + hit_box_factor_y) / cell_size][(int)(player_x + hit_box_factor_x) / cell_size];
-    char top_right_up = lvl[(int)(offset_y + hit_box_factor_y) / cell_size][(int)(player_x + hit_box_factor_x + Pwidth) / cell_size];
-    char top_mid_up = lvl[(int)(offset_y + hit_box_factor_y) / cell_size][(int)(player_x + hit_box_factor_x + Pwidth / 2) / cell_size];
-    char bottom_left_down = lvl[(int)(offset_y + hit_box_factor_y + Pheight) / cell_size][(int)(player_x + hit_box_factor_x) / cell_size];
-    char bottom_right_down = lvl[(int)(offset_y + hit_box_factor_y + Pheight) / cell_size][(int)(player_x + hit_box_factor_x + Pwidth) / cell_size];
-    char bottom_mid_down = lvl[(int)(offset_y + hit_box_factor_y + Pheight) / cell_size][(int)(player_x + hit_box_factor_x + Pwidth / 2) / cell_size];
+	char top_left_up = lvl[(int)(offset_y + hit_box_factor_y) / cell_size][(int)(player_x + hit_box_factor_x) / cell_size];
+	char top_right_up = lvl[(int)(offset_y + hit_box_factor_y) / cell_size][(int)(player_x + hit_box_factor_x + Pwidth) / cell_size];
+	char top_mid_up = lvl[(int)(offset_y + hit_box_factor_y) / cell_size][(int)(player_x + hit_box_factor_x + Pwidth / 2) / cell_size];
+	char bottom_left_down = lvl[(int)(offset_y + hit_box_factor_y + Pheight) / cell_size][(int)(player_x + hit_box_factor_x) / cell_size];
+	char bottom_right_down = lvl[(int)(offset_y + hit_box_factor_y + Pheight) / cell_size][(int)(player_x + hit_box_factor_x + Pwidth) / cell_size];
+	char bottom_mid_down = lvl[(int)(offset_y + hit_box_factor_y + Pheight) / cell_size][(int)(player_x + hit_box_factor_x + Pwidth / 2) / cell_size];
 
 
+	Clock delayjump;
 
 	LstillTex.loadFromFile("Data/0right_still.png");
 	LstillSprite.setTexture(LstillTex);
@@ -439,11 +440,31 @@ void player_gravity(char** lvl, float& offset_y, float& velocityY, bool& onGroun
 	char bottom_left_down = lvl[(int)(offset_y + hit_box_factor_y + Pheight) / cell_size][(int)(player_x + hit_box_factor_x) / cell_size];
 	char bottom_right_down = lvl[(int)(offset_y + hit_box_factor_y + Pheight) / cell_size][(int)(player_x + hit_box_factor_x + Pwidth) / cell_size];
 	char bottom_mid_down = lvl[(int)(offset_y + hit_box_factor_y + Pheight) / cell_size][(int)(player_x + hit_box_factor_x + Pwidth / 2) / cell_size];
+	// Top-left corner check (top edge of the player's hitbox)
+	char top_left_up = lvl[(int)(offset_y + hit_box_factor_y) / cell_size][(int)(player_x + hit_box_factor_x) / cell_size];
 
+	// Top-right corner check (top edge of the player's hitbox)
+	char top_right_up = lvl[(int)(offset_y + hit_box_factor_y) / cell_size][(int)(player_x + hit_box_factor_x + Pwidth) / cell_size];
 
-	if (bottom_left_down == 'w' || bottom_mid_down == 'w' || bottom_right_down == 'w')
+	// Top-middle check (center-top of the player's hitbox)
+	char top_mid_up = lvl[(int)(offset_y + hit_box_factor_y) / cell_size][(int)(player_x + hit_box_factor_x + Pwidth / 2) / cell_size];
+
+	/*if (top_left_up == 'w' || top_mid_up == 'w' || top_right_up == 'w')
 	{
-		onGround = true;
+		player_y -= 70;
+	}*/
+
+	if (velocityY >= 0)
+	{
+		if (bottom_left_down == 'w' || bottom_mid_down == 'w' || bottom_right_down == 'w')
+		{
+			onGround = true;
+		}
+		else
+		{
+			player_y = offset_y;
+			onGround = false;
+		}
 	}
 	else
 	{
@@ -471,10 +492,10 @@ void draw_player(RenderWindow& window, Sprite& LstillSprite, float player_x, flo
 }
 void display_level(RenderWindow& window, const int height, const int width, char** lvl, Sprite& wallSprite1, const int cell_size, Sprite& brickSp1, Sprite& brickSp2, Sprite& brickSp3, Sprite spikeSp)
 {
-	
-	for (int x = 0; x < 12800; x += 1600) { 
-		
-		wallSprite1.setPosition(x, 0); 
+
+	for (int x = 0; x < 12800; x += 1600) {
+
+		wallSprite1.setPosition(x, 0);
 		window.draw(wallSprite1);
 	}
 	//logic for a random pattern for bricks in last 2 rows
@@ -535,18 +556,47 @@ void movePlayer(float& player_x, float& player_y, float jumpStrength, Clock& del
 	if (key.isKeyPressed(key.Left))
 	{
 		player_x -= 8;
+		switche = true;
 	}
-	else if ( key.isKeyPressed(key.Right))
+	else if (key.isKeyPressed(key.Right))
 	{
 		player_x += 8;
+		twitche = true;
 	}
 	if (key.isKeyPressed(key.Space) && delayjump.getElapsedTime().asSeconds() > 0.3 && onGround)
 	{
-		velocityY = +jumpStrength; 
-		
+		velocityY = +jumpStrength;
+
 		delayjump.restart();
 	}
-	
+	//if(bottom_right_down=='w')
+
+
+	//if (key.isKeyPressed(key.Space) && delayjump.getElapsedTime().asSeconds() > 0.3)
+	//{
+
+	//	/*Clock delayclock3;*/
+	//	cloc = true;
+	//	player_y += (jumpStrength);
+	//	cout << "here";
+	//	//delayjump2.restart();
+	//	if (delayjump2.getElapsedTime().asSeconds() > 0.9)
+	//	{
+	//		delayjump.restart();
+	//		delayjump2.restart();
+	//		cout << "now here!";
+	//	}
+	//	//delayjump.restart();
+	//}
+	/*if (cloc)
+	{
+		if (delayjump.getElapsedTime().asMicroseconds() > 1)
+		{
+			player_y += jumpStrength;
+			cloc = false;
+			delayjump2.restart();
+		}
+	}*/
 }
 
 
