@@ -6,6 +6,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <SFML/Window.hpp>
+#include"enemies.h"
 int h;
 using namespace sf;
 using namespace std;
@@ -325,6 +326,13 @@ int main()
 	spikeTx.loadFromFile("Data/spike.png");
 	spikeSp.setTexture(spikeTx);
 
+	///////////////////////////////////////
+	//eneimies declaration
+	//start x,starty, end x and end y
+	MottoBug mottobug(64 * 69, 64 * 9.8, 64 * 86, 64 *9.8);
+	mottobug.setScale(3.0f, 3.0f); 
+	mottobug.loadSprite("Data/Enemies/mottobug1.png"); // Path to your MottoBug sprite
+
 	////////////////////////////////////////////////////////
 	float player_x = 100;
 	float player_y = 100;
@@ -420,6 +428,8 @@ int main()
 		moveView(view, player_x, player_y, cameraview);
 		draw_player(window, LstillSprite, player_x, player_y);
 		movePlayer(player_x, player_y, jumpStrength, delayjump, onGround, velocityY, bottom_left_down, bottom_right_down, lvl, top_mid_up);
+		mottobug.update();
+		mottobug.render(window);
 		window.setView(view);
 		window.display();
 	}
@@ -555,13 +565,13 @@ void movePlayer(float& player_x, float& player_y, float jumpStrength, Clock& del
 	Keyboard key;
 	if (key.isKeyPressed(key.Left))
 	{
-		player_x -= 8;
-		switche = true;
+		player_x -= 25;
+		//switche = true;
 	}
 	else if (key.isKeyPressed(key.Right))
 	{
-		player_x += 8;
-		twitche = true;
+		player_x += 25;
+		//twitche = true;
 	}
 	if (key.isKeyPressed(key.Space) && delayjump.getElapsedTime().asSeconds() > 0.3 && onGround)
 	{
@@ -572,23 +582,23 @@ void movePlayer(float& player_x, float& player_y, float jumpStrength, Clock& del
 	//if(bottom_right_down=='w')
 
 
-	//if (key.isKeyPressed(key.Space) && delayjump.getElapsedTime().asSeconds() > 0.3)
-	//{
+	/*if (key.isKeyPressed(key.Space) && delayjump.getElapsedTime().asSeconds() > 0.3)
+	{
 
-	//	/*Clock delayclock3;*/
-	//	cloc = true;
-	//	player_y += (jumpStrength);
-	//	cout << "here";
-	//	//delayjump2.restart();
-	//	if (delayjump2.getElapsedTime().asSeconds() > 0.9)
-	//	{
-	//		delayjump.restart();
-	//		delayjump2.restart();
-	//		cout << "now here!";
-	//	}
-	//	//delayjump.restart();
-	//}
-	/*if (cloc)
+		Clock delayclock3;
+		cloc = true;
+		player_y += (jumpStrength);
+		cout << "here";
+		delayjump2.restart();
+		if (delayjump2.getElapsedTime().asSeconds() > 0.9)
+		{
+			delayjump.restart();
+			delayjump2.restart();
+			cout << "now here!";
+		}
+		delayjump.restart();
+	}
+	if (cloc)
 	{
 		if (delayjump.getElapsedTime().asMicroseconds() > 1)
 		{
