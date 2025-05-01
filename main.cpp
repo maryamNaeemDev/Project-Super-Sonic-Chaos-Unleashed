@@ -347,6 +347,7 @@ int main()
 	float jumpStrength = -20; // Initial jump velocity
 	float gravity = 1;  // Gravity acceleration
 
+	
 
 	//SPrites for sonic!!
 	Texture LstillTex;
@@ -400,6 +401,9 @@ Texture rightup5;
 Texture rightup6;
 Texture rightup7;
 Texture rightup8;
+
+float scale_x = 2.5;
+float scale_y = 2.5;
 
 LstillTex.loadFromFile("Data/0left_still.png");
 LstillSprite.setTexture(LstillTex);
@@ -468,8 +472,6 @@ int j = 0;
 
 	float acceleration = 0.2;
 
-	float scale_x = 2.5;
-	float scale_y = 2.5;
 
 	View view(FloatRect(0, 0, 1200, 900));
 	FloatRect cameraview(0, 0, 400 + 90 + 90 + 5, 200 + 50 + 50 + 10);
@@ -496,9 +498,9 @@ int j = 0;
 
 	Clock delayjump;
 
-	LstillTex.loadFromFile("Data/0right_still.png");
-	LstillSprite.setTexture(LstillTex);
-	LstillSprite.setScale(scale_x, scale_y);
+	//LstillTex.loadFromFile("Data/0right_still.png");
+	//LstillSprite.setTexture(LstillTex);
+	//LstillSprite.setScale(scale_x, scale_y);
 
 	////////////////////////////////////////////////////////
 	sf::RectangleShape cameraBox;
@@ -531,10 +533,39 @@ int j = 0;
 			window.close();
 		}
 
+		///// PARTTT OF ANIMATIONSSSSS ////////
+if (i > 10)
+i = 0;
+i++;
+for (int j = 0; j < 10; j++)
+{
+if (j == i)
+{
+	toggle[j] = true;
+}
+else
+	toggle[j] = false;
+}
+
+if (j > 8)
+j = 0;
+j++;
+for (int k = 0; k < 8; k++)
+{
+if (k == i)
+{
+	boggle[k] = true;
+}
+else
+	boggle[k] = false;
+}
+///// PARTTT OF ANIMATIONSSSSS ////////
+
 		player_gravity(lvl, offset_y, velocityY, onGround, gravity, terminal_Velocity, hit_box_factor_x, hit_box_factor_y, player_x, player_y, cell_size, Pheight, Pwidth);
 
 		window.clear();
 
+		display_level(window, height, width, lvl, wallSprite1, cell_size, brickSp1, brickSp2, brickSp3, spikeSp);
 		moveView(view, player_x, player_y, cameraview);
 		animation(LstillSprite, leftjog, leftjog1, leftjog2, leftjog3, leftjog4, leftjog5, leftjog6, leftjog7, leftjog8, leftjog9, leftjog10, rightjog, rightjog1, rightjog2, rightjog3, rightjog4, rightjog5, rightjog6, rightjog7, rightjog8, rightjog9, rightjog10, scale_x, scale_y, switche, twitche, toggle, leftup, leftup1, leftup2, leftup3, leftup4, leftup5, leftup6, leftup7, leftup8, rightup, rightup1, rightup2, rightup3, rightup4, rightup5, rightup6, rightup7, rightup8, boggle, bruh);
 		draw_player(window, RstillSprite, LstillSprite, player_x, player_y, leftjog, rightjog, switche, twitche, bruh, truh, leftup, rightup);
