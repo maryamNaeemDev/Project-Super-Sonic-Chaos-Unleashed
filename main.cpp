@@ -2,13 +2,13 @@
 #include <fstream>
 #include <cstdlib> //for rand func
 #include <ctime> //for srand func
-//#include <cmath>
+#include <cmath>
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <SFML/Window.hpp>
 #include"enemies.h"
-#include "Characters.h"
-#include"collectibles.h"
+#include"../SuperSonic/character.h"
+#include"../SuperSonic/collectables.h"
 int h;
 using namespace sf;
 using namespace std;
@@ -17,11 +17,8 @@ int screen_x = 1200;
 int screen_y = 900;
 
 // prototypes 
-void player_gravity(char** lvl, float& offset_y, float& velocityY, bool& onGround, float& gravity, float& terminal_Velocity, int& hit_box_factor_x, int& hit_box_factor_y, float& player_x, float& player_y, const int cell_size, int& Pheight, int& Pwidth);
 
-void draw_player(RenderWindow& window, Sprite& LstillSprite, float player_x, float player_y);
-
-void display_level(RenderWindow& window, const int height, const int width, char** lvl, Sprite& wallSprite1, const int cell_size, Sprite& brickSp1, Sprite& brickSp2, Sprite& brickSp3, Sprite spikeSp, Sprite leafsprite, Sprite brickSp4,Sprite lionspriteRt,Sprite lionsprite, Sprite crystalsp);
+void display_level(RenderWindow& window, const int height, const int width, char** lvl, Sprite& wallSprite1, const int cell_size, Sprite& brickSp1, Sprite& brickSp2, Sprite& brickSp3, Sprite spikeSp, Sprite leafsprite, Sprite brickSp4, Sprite lionspriteRt, Sprite lionsprite, Sprite crystalsp);
 
 void movePlayer(float& player_x, float& player_y, float jumpStrength, Clock& delayjump, bool& onGround, float& velocityY, char& bottom_left_down, char& bottom_right_down, char** lvl, char& top_mid_up);
 
@@ -30,6 +27,7 @@ void moveView(View& view, float player_x, float player_y, FloatRect& cameraview)
 void freeRings(Rings**& ringArray, int& ringCount);
 
 void freeBoast(Boast**& BoastArray, int& BoastCount);
+
 int main()
 {
 
@@ -90,10 +88,10 @@ int main()
 	Texture crystaltex;
 	Sprite  crystalsp;
 	//loading enemy sprites
-	MottoBug mottobug(64*72, 64*9.8, 64*86, 64*9.8);
+	MottoBug mottobug(64 * 72, 64 * 9.8, 64 * 86, 64 * 9.8);
 	mottobug.setScale(3.0f, 3.0f);
 
-	CrabMeat crab(64*96, 64 * 9.6, 64 * 105, 64 * 9.6);
+	CrabMeat crab(64 * 96, 64 * 9.6, 64 * 105, 64 * 9.6);
 	crab.setScale(3.0f, 3.0f);
 
 	BeeBot beebot(64 * 124, 64 * 4, 64 * 135, 64 * 4);
@@ -112,10 +110,8 @@ int main()
 		lvl[i] = new char[width] {'\0'};
 
 	}
-	//initializing first and last three rows to w which is for brick
-	Rings obj_ring;
 
-	//ringTemplate.initializeRings(lvl, height, width, ringArray, ringCount);
+	Rings obj_ring;
 
 	Rings** ringArray = nullptr;
 	ringArray = new Rings * [200];
@@ -137,7 +133,7 @@ int main()
 	Life** lifeArray = nullptr;
 	lifeArray = new Life * [200];
 	int lifeCount = 0;
-	
+
 	obj_life.initializeGrid(lvl, height, width);
 	obj_life.placeOnGrid(lvl, 14, 200, lifeArray, lifeCount);
 
@@ -162,11 +158,11 @@ int main()
 			lvl[1][16] = 'w';
 			lvl[1][16 + 1] = 'w';
 			lvl[2][16 + 1] = 'w';
-			
-				lvl[1][24+k] = 'l';
-			
+
+			lvl[1][24 + k] = 'l';
+
 		}
-		
+
 		for (int k = 0; k < 3; k++)
 		{
 			lvl[height - 6][20 + k] = 'w';
@@ -212,7 +208,7 @@ int main()
 				lvl[k][36] = 'w';
 				lvl[k][42] = 'w';
 			}
-		
+
 
 			for (int i = 0; i < 5; i++)
 			{
@@ -256,12 +252,12 @@ int main()
 					lvl[k][63] = 'w';
 					lvl[k][64] = 'w';
 				}
-			else
-			{
-				lvl[k][62] = 'w';
-				lvl[k][63] = 'w';
-				lvl[k][64] = 'w';
-			}
+				else
+				{
+					lvl[k][62] = 'w';
+					lvl[k][63] = 'w';
+					lvl[k][64] = 'w';
+				}
 			}
 
 
@@ -297,7 +293,7 @@ int main()
 		}
 		for (int k = 0; k < 2; k++)
 		{
-			
+
 			lvl[height - 8][68 + k] = 'w';
 			lvl[height - 8][73 + k] = 'w';
 			lvl[height - 8][81 + k] = 'w';
@@ -311,7 +307,7 @@ int main()
 			}
 			if (i > 6 && i < 12)
 			{
-				
+
 				lvl[i][89] = 'b';
 				lvl[i][90] = 'b';
 				lvl[i][88] = 'b';
@@ -392,7 +388,7 @@ int main()
 
 				lvl[height - 11][142 + i] = 'w';
 				lvl[height - 9][142 + i] = 'w';
-				lvl[3][137]='o';
+				lvl[3][137] = 'o';
 				lvl[3][148] = 'O';
 				lvl[height - 4][144] = 'p';
 				if (i < 4)
@@ -426,7 +422,7 @@ int main()
 			lvl[6][180] = 'w';
 			lvl[6][183] = 'w';
 			lvl[6][186] = 'w';
-			
+
 
 
 		}
@@ -481,13 +477,28 @@ int main()
 	scaleFactor.y = 2.5f;
 	leafsprite.setScale(scaleFactor);
 
-	
-	
+	//Textures and sprites loading
+	wallTex1.loadFromFile("Data/Bg2.png");
+	wallSprite1.setTexture(wallTex1);
+
+
+	brickTx1.loadFromFile("Data/brick2.png");
+	brickSp1.setTexture(brickTx1);
+
+	brickTx2.loadFromFile("Data/brick3.png");
+	brickSp2.setTexture(brickTx2);
+
+	brickTx3.loadFromFile("Data/brick1.png");
+	brickSp3.setTexture(brickTx3);
+
+	spikeTx.loadFromFile("Data/spike.png");
+	spikeSp.setTexture(spikeTx);
+
 	///////////////////////////////////////
 	//eneimies declaration
 	//start x,starty, end x and end y
-	//MottoBug mottobug(64 * 69, 64 * 9.8, 64 * 86, 64 *9.8);
-	//mottobug.setScale(3.0f, 3.0f); 
+	//MottoBug mottobug(64 * 69, 64 * 9.8, 64 * 86, 64 * 9.8);
+	//mottobug.setScale(3.0f, 3.0f);
 	//mottobug.loadSprite("Data/Enemies/mottobug1.png"); // Path to your MottoBug sprite
 
 	////////////////////////////////////////////////////////
@@ -502,10 +513,27 @@ int main()
 	float jumpStrength = -20; // Initial jump velocity
 	float gravity = 1;  // Gravity acceleration
 
-	Texture LstillTex;
-	Sprite LstillSprite;
 
-	bool onGround = false;
+
+	//SPrites for sonic!!
+	
+
+	float scale_x = 2.5;
+	float scale_y = 2.5;
+
+	
+
+	
+
+	bool toggle[10] = { 0 };
+	int i = 0;
+
+	bool boggle[8] = { 0 };
+	int j = 0;
+
+
+
+
 
 	float offset_x = 0;
 	float offset_y = 0;
@@ -514,11 +542,9 @@ int main()
 
 	float acceleration = 0.2;
 
-	float scale_x = 2.5;
-	float scale_y = 2.5;
 
 	View view(FloatRect(0, 0, 1200, 900));
-	FloatRect cameraview(0, 0, 400 + 90 + 90 + 5, 200 + 50 + 50 + 10);
+	FloatRect cameraview(0, 0, 400 + 90 + 90 + 5 , 200 + 50 + 50 + 10);
 
 	////////////////////////////
 	int raw_img_x = 24;
@@ -539,12 +565,20 @@ int main()
 	char bottom_right_down = lvl[(int)(offset_y + hit_box_factor_y + Pheight) / cell_size][(int)(player_x + hit_box_factor_x + Pwidth) / cell_size];
 	char bottom_mid_down = lvl[(int)(offset_y + hit_box_factor_y + Pheight) / cell_size][(int)(player_x + hit_box_factor_x + Pwidth / 2) / cell_size];
 
+	bool t;
+	bool s=true;
+	bool k;
+	
 
-	Clock delayjump;
-
-	LstillTex.loadFromFile("Data/0right_still.png");
-	LstillSprite.setTexture(LstillTex);
-	LstillSprite.setScale(scale_x, scale_y);
+	Sonic* sonic;
+	sonic = new Sonic;
+	Player player(sonic);
+	Knuckles* knuckles;
+	knuckles = new Knuckles;
+	Computer_Controlled c1(knuckles, sonic);
+	Tails* tails;
+	tails = new Tails;
+	Computer_Controlled c2(tails, knuckles);
 
 	////////////////////////////////////////////////////////
 	sf::RectangleShape cameraBox;
@@ -577,15 +611,86 @@ int main()
 			window.close();
 		}
 
-		player_gravity(lvl, offset_y, velocityY, onGround, gravity, terminal_Velocity, hit_box_factor_x, hit_box_factor_y, player_x, player_y, cell_size, Pheight, Pwidth);
+		///// PARTTT OF ANIMATIONSSSSS ////////
+		if (i > 10)
+			i = 0;
+		i++;
+		for (int j = 0; j < 10; j++)
+		{
+			if (j == i)
+			{
+				toggle[j] = true;
+			}
+			else
+				toggle[j] = false;
+		}
 
+		if (j > 8)
+			j = 0;
+		j++;
+		for (int k = 0; k < 8; k++)
+		{
+			if (k == i)
+			{
+				boggle[k] = true;
+			}
+			else
+				boggle[k] = false;
+		}
+		///// PARTTT OF ANIMATIONSSSSS ////////
+
+		player.apply_gravity(lvl, offset_y, gravity, terminal_Velocity, hit_box_factor_x, hit_box_factor_y, cell_size, Pheight, Pwidth);
+		c1.apply_gravity(lvl, offset_y, gravity, terminal_Velocity, hit_box_factor_x, hit_box_factor_y, cell_size, Pheight, Pwidth);
+		c2.apply_gravity(lvl, offset_y, gravity, terminal_Velocity, hit_box_factor_x, hit_box_factor_y, cell_size, Pheight, Pwidth);
 		window.clear();
 
-		display_level(window, height, width, lvl, wallSprite1, cell_size, brickSp1, brickSp2, brickSp3, spikeSp,leafsprite, brickSp4, lionspriteRt,lionsprite, crystalsp);
-		moveView(view, player_x, player_y, cameraview);
-		draw_player(window, LstillSprite, player_x, player_y);
-		movePlayer(player_x, player_y, jumpStrength, delayjump, onGround, velocityY, bottom_left_down, bottom_right_down, lvl, top_mid_up);
-		/*ring.render(window);*/
+		display_level(window, height, width, lvl, wallSprite1, cell_size, brickSp1, brickSp2, brickSp3, spikeSp, leafsprite, brickSp4, lionspriteRt, lionsprite, crystalsp);
+		moveView(view, player.getX(), player.getY(), cameraview);
+		player.animate(toggle, boggle);
+		c1.animate(toggle, boggle);
+		c2.animate(toggle, boggle);
+		player.draw(window);
+		c1.draw(window);
+		c2.draw(window);
+		player.move(lvl, cell_size, width);
+		c1.update(lvl, cell_size, width, height);
+		c2.update(lvl, cell_size, width, height);
+		
+		if (Keyboard::isKeyPressed(Keyboard::T))
+		{
+			player.active_character(tails);
+			c1.computercontrol(sonic, tails);
+			c2.computercontrol(knuckles, sonic);
+			t = true;
+			k = false;
+			s = false;
+		}
+		else if (Keyboard::isKeyPressed(Keyboard::K))
+		{
+			player.active_character(knuckles);
+			c1.computercontrol(sonic, tails);
+			c2.computercontrol(tails, knuckles);
+			t = false;
+			k = true;
+			s = false;
+		}
+		else if (Keyboard::isKeyPressed(Keyboard::S))
+		{
+			player.active_character(sonic);
+			c1.computercontrol(knuckles, sonic);
+			c2.computercontrol(tails, knuckles);
+			t = false;
+			k = false;
+			s = true;
+		}
+		if (k)
+		{
+			knuckles->breakwall(lvl, offset_y, gravity, terminal_Velocity, hit_box_factor_x, hit_box_factor_y, cell_size, Pheight, Pwidth);
+		}
+		if (t)
+		{
+			tails->fly(lvl, cell_size);
+		}
 		mottobug.update();
 		mottobug.render(window);
 		crab.update();
@@ -618,72 +723,19 @@ int main()
 	delete[] lifeArray;
 	lifeArray = nullptr;
 	lifeCount = 0;
+
+	delete sonic;
+	delete knuckles;
+	delete tails;
 	return 0;
 }
 
 
 // functions
 
-void player_gravity(char** lvl, float& offset_y, float& velocityY, bool& onGround, float& gravity, float& terminal_Velocity, int& hit_box_factor_x, int& hit_box_factor_y, float& player_x, float& player_y, const int cell_size, int& Pheight, int& Pwidth)
-{
-	offset_y = player_y;
 
-	offset_y += velocityY;
 
-	char bottom_left_down = lvl[(int)(offset_y + hit_box_factor_y + Pheight) / cell_size][(int)(player_x + hit_box_factor_x) / cell_size];
-	char bottom_right_down = lvl[(int)(offset_y + hit_box_factor_y + Pheight) / cell_size][(int)(player_x + hit_box_factor_x + Pwidth) / cell_size];
-	char bottom_mid_down = lvl[(int)(offset_y + hit_box_factor_y + Pheight) / cell_size][(int)(player_x + hit_box_factor_x + Pwidth / 2) / cell_size];
-	// Top-left corner check (top edge of the player's hitbox)
-	char top_left_up = lvl[(int)(offset_y + hit_box_factor_y) / cell_size][(int)(player_x + hit_box_factor_x) / cell_size];
-
-	// Top-right corner check (top edge of the player's hitbox)
-	char top_right_up = lvl[(int)(offset_y + hit_box_factor_y) / cell_size][(int)(player_x + hit_box_factor_x + Pwidth) / cell_size];
-
-	// Top-middle check (center-top of the player's hitbox)
-	char top_mid_up = lvl[(int)(offset_y + hit_box_factor_y) / cell_size][(int)(player_x + hit_box_factor_x + Pwidth / 2) / cell_size];
-
-	/*if (top_left_up == 'w' || top_mid_up == 'w' || top_right_up == 'w')
-	{
-		player_y -= 70;
-	}*/
-
-	if (velocityY >= 0)
-	{
-		if (bottom_left_down == 'w' || bottom_mid_down == 'w' || bottom_right_down == 'w')
-		{
-			onGround = true;
-		}
-		else
-		{
-			player_y = offset_y;
-			onGround = false;
-		}
-	}
-	else
-	{
-		player_y = offset_y;
-		onGround = false;
-	}
-
-	if (!onGround)
-	{
-		velocityY += gravity;
-		if (velocityY >= terminal_Velocity) velocityY = terminal_Velocity;
-	}
-
-	else
-	{
-		velocityY = 0;
-	}
-
-}
-void draw_player(RenderWindow& window, Sprite& LstillSprite, float player_x, float player_y) {
-
-	LstillSprite.setPosition(player_x, player_y);
-	window.draw(LstillSprite);
-
-}
-void display_level(RenderWindow& window, const int height, const int width, char** lvl, Sprite& wallSprite1, const int cell_size, Sprite& brickSp1, Sprite& brickSp2, Sprite& brickSp3, Sprite spikeSp, Sprite leafsprite,Sprite brickSp4,Sprite lionspriteRt,Sprite lionsprite, Sprite crystalsp)
+void display_level(RenderWindow& window, const int height, const int width, char** lvl, Sprite& wallSprite1, const int cell_size, Sprite& brickSp1, Sprite& brickSp2, Sprite& brickSp3, Sprite spikeSp, Sprite leafsprite, Sprite brickSp4, Sprite lionspriteRt, Sprite lionsprite, Sprite crystalsp)
 {
 
 	for (int x = 0; x < 12800; x += 1600) {
@@ -746,12 +798,12 @@ void display_level(RenderWindow& window, const int height, const int width, char
 				spikeSp.setPosition(j * cell_size, i * cell_size);
 				window.draw(spikeSp);
 			}
-			else if (lvl[i][j]=='l')
+			else if (lvl[i][j] == 'l')
 			{
 				leafsprite.setPosition(j * cell_size, i * cell_size);
 				window.draw(leafsprite);
 			}
-			
+
 			else if (lvl[i][j] == 'o')
 			{
 				lionsprite.setPosition(j * 64, i * 64);  // Position the bricks properly
@@ -777,27 +829,8 @@ void display_level(RenderWindow& window, const int height, const int width, char
 		}
 	}
 }
-void movePlayer(float& player_x, float& player_y, float jumpStrength, Clock& delayjump, bool& onGround, float& velocityY, char& bottom_left_down, char& bottom_right_down, char** lvl, char& top_mid_up)
-{
-	Keyboard key;
-	if (key.isKeyPressed(key.Left))
-	{
-		player_x -= 25;
-		//switche = true;
-	}
-	else if (key.isKeyPressed(key.Right))
-	{
-		player_x += 25;
-		//twitche = true;
-	}
-	if (key.isKeyPressed(key.Space) && delayjump.getElapsedTime().asSeconds() > 0.3 && onGround)
-	{
-		velocityY = +jumpStrength;
 
-		delayjump.restart();
-	}
-	
-}
+
 
 
 void moveView(View& view, float player_x, float player_y, FloatRect& cameraview)
@@ -812,12 +845,11 @@ void moveView(View& view, float player_x, float player_y, FloatRect& cameraview)
 			view.move(player_x - cameraview.left, 0);
 		else if (player_x > cameraview.left + cameraview.width)
 			view.move(player_x - (cameraview.left + cameraview.width), 0);
-		/*if (player_y < cameraview.top)
-			view.move(0, player_y - cameraview.top);*/
-		if (player_y > cameraview.top + cameraview.height)
+		if (player_y-30 > cameraview.top + cameraview.height)
 			view.move(0, player_y - (cameraview.top + cameraview.height));
 	}
 }
+
 void freeRings(Rings**& ringArray, int& ringCount) {
 	for (int i = 0; i < ringCount; ++i) {
 		delete ringArray[i];
@@ -834,11 +866,3 @@ void freeBoast(Boast**& BoastArray, int& BoastCount) {
 	BoastArray = nullptr;
 	BoastCount = 0;
 }
-//void freeLife(Rings**& LifeArray, int& lifeCount) {
-//	for (int i = 0; i < lifeCount; ++i) {
-//		delete LifeArray[i];
-//	}
-//	delete[] LifeArray;
-//	LifeArray = nullptr;
-//	lifeCount = 0;
-//}
