@@ -1111,6 +1111,8 @@ class Player
 	float player_x;
 	float player_y;
 	Clock delayjump;
+	int rings_collected = 0;
+	int hp=10;
 public:
 	Player()
 	{
@@ -1122,6 +1124,10 @@ public:
 		player_x = active->getX();
 		player_y = active->getY();
 	}
+	int getHp() { return hp; }
+	void setHp(int n) { hp = n; }
+	int getRingsCollected() { return rings_collected; }
+	void setRingsCollected(int r) { rings_collected = r; }
 	float getX() { return player_x; }
 	float getY() { return player_y; }
 	void active_character(Characters* yoo)

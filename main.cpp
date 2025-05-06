@@ -7,8 +7,9 @@
 #include <SFML/Audio.hpp>
 #include <SFML/Window.hpp>
 #include"enemies.h"
-#include"../SuperSonic/character.h"
-#include"../SuperSonic/collectables.h"
+#include"../SuperSonic/Characters.h"
+#include"../SuperSonic/Collectibles.h"
+#include<../SuperSonic/menu.h>
 int h;
 using namespace sf;
 using namespace std;
@@ -572,7 +573,7 @@ int main()
 
 	Sonic* sonic;
 	sonic = new Sonic;
-	Player player(sonic);
+	Player* player= new Player(sonic);
 	Knuckles* knuckles;
 	knuckles = new Knuckles;
 	Computer_Controlled c1(knuckles, sonic);
@@ -586,6 +587,23 @@ int main()
 	cameraBox.setFillColor(sf::Color(0, 255, 0, 50));  // Semi-transparent green
 	cameraBox.setOutlineColor(sf::Color::Green);
 	cameraBox.setOutlineThickness(2);
+
+
+	Font font;
+	if (!font.loadFromFile("Data/DungeonFont.ttf")) {
+		return EXIT_FAILURE;
+	}
+	Menu menu(font);
+	int selected = menu.run(window);
+	if (selected == 1) // "Levels" selected from main menu
+	{
+		int levelChoice = menu.runLevelMenu(window);
+		if (levelChoice >= 10) // A level was selected
+		{
+			int actualLevel = levelChoice - 10;
+			// Start the selected level (actualLevel will be 0-3)
+		}
+	}
 
 	Event ev;
 	while (window.isOpen())
@@ -639,26 +657,26 @@ int main()
 		}
 		///// PARTTT OF ANIMATIONSSSSS ////////
 
-		player.apply_gravity(lvl, offset_y, gravity, terminal_Velocity, hit_box_factor_x, hit_box_factor_y, cell_size, Pheight, Pwidth);
+		player->apply_gravity(lvl, offset_y, gravity, terminal_Velocity, hit_box_factor_x, hit_box_factor_y, cell_size, Pheight, Pwidth);
 		c1.apply_gravity(lvl, offset_y, gravity, terminal_Velocity, hit_box_factor_x, hit_box_factor_y, cell_size, Pheight, Pwidth);
 		c2.apply_gravity(lvl, offset_y, gravity, terminal_Velocity, hit_box_factor_x, hit_box_factor_y, cell_size, Pheight, Pwidth);
 		window.clear();
 
 		display_level(window, height, width, lvl, wallSprite1, cell_size, brickSp1, brickSp2, brickSp3, spikeSp, leafsprite, brickSp4, lionspriteRt, lionsprite, crystalsp);
-		moveView(view, player.getX(), player.getY(), cameraview);
-		player.animate(toggle, boggle);
+		moveView(view, player->getX(), player->getY(), cameraview);
+		player->animate(toggle, boggle);
 		c1.animate(toggle, boggle);
 		c2.animate(toggle, boggle);
-		player.draw(window);
+		player->draw(window);
 		c1.draw(window);
 		c2.draw(window);
-		player.move(lvl, cell_size, width);
+		player->move(lvl, cell_size, width);
 		c1.update(lvl, cell_size, width, height);
 		c2.update(lvl, cell_size, width, height);
 		
 		if (Keyboard::isKeyPressed(Keyboard::T))
 		{
-			player.active_character(tails);
+			player->active_character(tails);
 			c1.computercontrol(sonic, tails);
 			c2.computercontrol(knuckles, sonic);
 			t = true;
@@ -667,7 +685,7 @@ int main()
 		}
 		else if (Keyboard::isKeyPressed(Keyboard::K))
 		{
-			player.active_character(knuckles);
+			player->active_character(knuckles);
 			c1.computercontrol(sonic, tails);
 			c2.computercontrol(tails, knuckles);
 			t = false;
@@ -676,7 +694,7 @@ int main()
 		}
 		else if (Keyboard::isKeyPressed(Keyboard::S))
 		{
-			player.active_character(sonic);
+			player->active_character(sonic);
 			c1.computercontrol(knuckles, sonic);
 			c2.computercontrol(tails, knuckles);
 			t = false;
@@ -698,23 +716,34 @@ int main()
 		beebot.update();
 		beebot.render(window);
 		for (int i = 0; i < ringCount; ++i) {
-			ringArray[i]->setScaleC(0.75f, 0.75f);
-			ringArray[i]->update();
-			ringArray[i]->render(window);
+			if (ringArray[i]->getOn())
+			{
+				ringArray[i]->setScaleC(0.75f, 0.75f);
+				ringArray[i]->update();
+				ringArray[i]->collision(player);
+				ringArray[i]->render(window);
+			}
 		}
 		for (int i = 0; i < boastCount; ++i) {
 			boastArray[i]->setScaleC(0.75f, 0.75f);
 			boastArray[i]->update();
+			//boastArray[i]->collision(player);
 			boastArray[i]->render(window);
 		}
 		for (int i = 0; i < lifeCount; ++i) {
-			lifeArray[i]->setScaleC(0.75f, 0.75f);
-			lifeArray[i]->update();
-			lifeArray[i]->render(window);
+			if (lifeArray[i]->getOn())
+			{
+				lifeArray[i]->setScaleC(0.75f, 0.75f);
+				lifeArray[i]->update();
+				lifeArray[i]->collision(player);
+				lifeArray[i]->render(window);
+			}
 		}
 		window.setView(view);
 		window.display();
 	}
+	cout << "Rings:" << player->getRingsCollected()<<endl;
+	cout << "HP: " << player->getHp() << endl;
 	freeRings(ringArray, ringCount);
 	freeBoast(boastArray, boastCount);
 	for (int i = 0; i < lifeCount; ++i) {
@@ -724,9 +753,11 @@ int main()
 	lifeArray = nullptr;
 	lifeCount = 0;
 
+
 	delete sonic;
 	delete knuckles;
 	delete tails;
+	delete player;
 	return 0;
 }
 

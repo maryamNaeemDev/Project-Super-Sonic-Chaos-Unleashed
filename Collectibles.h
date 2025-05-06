@@ -7,20 +7,21 @@ class Rings;
 
 class Collectibles {
 protected:
-	int s_position_x, s_position_y;
-	sf::Vector2f scaleFactor = { 1.0f, 1.0f };
+    int s_position_x, s_position_y;
+    sf::Vector2f scaleFactor = { 1.0f, 1.0f };
+    bool on = true;
 
 public:
-	virtual void update() = 0;
-	virtual void render(sf::RenderWindow& window) = 0;
-	virtual bool collision(int& playerX, int& playerY) = 0;
+    virtual void update() = 0;
+    virtual void render(sf::RenderWindow& window) = 0;
+    virtual bool collision(Player* player) = 0;
 
-   virtual void initializeGrid(char** lvl, int height, int width)=0;
-   virtual void setPosition(int x, int y) = 0;
-	virtual void setScaleC(float scaleX, float scaleY) = 0;
-	virtual void loadSprites() = 0;
-
-	virtual ~Collectibles() {}
+    virtual void initializeGrid(char** lvl, int height, int width) = 0;
+    virtual void setPosition(int x, int y) = 0;
+    virtual void setScaleC(float scaleX, float scaleY) = 0;
+    virtual void loadSprites() = 0;
+    bool getOn() { return on; }
+    virtual ~Collectibles() {}
 };
 class Rings : public Collectibles {
 private:
@@ -64,8 +65,17 @@ public:
         }
     }
 
-    bool collision(int& playerX, int& playerY) override {
-        return false;
+    bool collision(Player* player) override {
+        if (abs(player->getX() - s_position_x) < 35 && abs(player->getY() - s_position_y)<35)
+        {
+            cout<<"YAYYYYYYYYYYYY!!! COllison detected!!";
+            int r = player->getRingsCollected();
+            player->setRingsCollected(++r);
+            on = false;
+            return true;
+        }
+        else
+            return false;
     }
 
     void setPosition(int x, int y) override {
@@ -83,31 +93,31 @@ public:
             RingSp[i].setScale(scaleFactor);
         }
     }
-   
+
     void initializeGrid(char** lvl, int height, int width) override {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 if (5 + i < height && 25 + j < width)
-                    lvl[5 + i][25+ j] = 'r';
+                    lvl[5 + i][25 + j] = 'r';
                 if (5 + i < height && 15 + j < width)
                     lvl[5 + i][16 + j] = 'r';
                 if (5 + i < height && 20 + j < width)
                     lvl[5 + i][20 + j] = 'r';
-				/*if (3 + i < height && 47 + j < width)
-					lvl[4 + i][47 + j] = 'r';*/
+                /*if (3 + i < height && 47 + j < width)
+                    lvl[4 + i][47 + j] = 'r';*/
             }
-            for (int i = 0;i < width;i++)
+            for (int i = 0; i < width; i++)
             {
-                for (int j = 0;j <5;j++)
+                for (int j = 0; j < 5; j++)
                 {
-					lvl[3][37+j] = 'r';
+                    lvl[3][37 + j] = 'r';
                     lvl[4][37 + j] = 'r';
                     lvl[5][37 + j] = 'r';
                     if (j < 2)
                     {
                         lvl[6][37 + j] = 'r';
-						lvl[6][40 + j] = 'r';
-						
+                        lvl[6][40 + j] = 'r';
+
 
                     }
                     if (i < 3)
@@ -115,9 +125,9 @@ public:
                         lvl[5 + i][52] = 'r';
                         lvl[3 + i][56] = 'r';
                     }
-					if (i < 2)
-					{
-						lvl[4 + i][68] = 'r';
+                    if (i < 2)
+                    {
+                        lvl[4 + i][68] = 'r';
                         lvl[4 + i][69] = 'r';
                         lvl[4 + i][73] = 'r';
                         lvl[4 + i][74] = 'r';
@@ -125,7 +135,7 @@ public:
                         lvl[4 + i][82] = 'r';
                         lvl[4 + i][86] = 'r';
                         lvl[4 + i][87] = 'r';
-					}
+                    }
                     lvl[height - 4][106] = 'r';
                     lvl[height - 5][107] = 'r';
                     lvl[height - 6][108] = 'r';
@@ -136,7 +146,7 @@ public:
                     lvl[height - 11][113] = 'r';
 
                     lvl[height - 8][142 + j] = 'r';
-                    lvl[height-7][142 + j] = 'r';
+                    lvl[height - 7][142 + j] = 'r';
                     lvl[height - 6][142 + j] = 'r';
                     lvl[height - 5][142 + j] = 'r';
                     if (j < 2)
@@ -148,13 +158,13 @@ public:
                     for (int i = 0; i < 8; i++)
                     {
                         lvl[height - 8][159 + i] = 'r';
-                        lvl[height-7][159 + i] = 'r';
-                        lvl[height-6][159 + i] = 'r';
-                        lvl[height-5][159 + i] = 'r';
-                        lvl[height-4][159 + i] = 'r';
+                        lvl[height - 7][159 + i] = 'r';
+                        lvl[height - 6][159 + i] = 'r';
+                        lvl[height - 5][159 + i] = 'r';
+                        lvl[height - 4][159 + i] = 'r';
                     }
 
-                    for (int i=0 ;i< 2;i++)
+                    for (int i = 0; i < 2; i++)
                     {
                         lvl[4][178 + i] = 'r';
                         lvl[5][178 + i] = 'r';
@@ -174,7 +184,7 @@ public:
             lvl[5][36] = 'r';
         }*/
     }
-    void placeOnGrid(char** lvl, int height, int width, Rings**& ringArray, int& count) 
+    void placeOnGrid(char** lvl, int height, int width, Rings**& ringArray, int& count)
     {
         count = 0;
 
@@ -199,7 +209,7 @@ public:
         }
     }
 
-   
+
 };
 
 class Boast : public Collectibles
@@ -250,7 +260,7 @@ public:
         }
     }
 
-    bool collision(int& playerX, int& playerY) override {
+    bool collision(Player* player) override {
         return false;
     }
 
@@ -270,15 +280,15 @@ public:
         }
     }
 
-    void initializeGrid(char** lvl, int height, int width) override 
+    void initializeGrid(char** lvl, int height, int width) override
     {
-       
-            for (int i = 0;i < width;i++)
-            {
-				lvl[2][63] = 'u';
-            }
+
+        for (int i = 0; i < width; i++)
+        {
+            lvl[2][63] = 'u';
+        }
     }
-       
+
     void placeOnGrid(char** lvl, int height, int width, Boast**& boastArray, int& count)
     {
         count = 0;
@@ -309,11 +319,11 @@ public:
 class Life : public Collectibles
 {
 private:
-sf::Texture PowerTex[4];
-sf::Sprite PowerSp[4];
-sf::Clock animationClock;
-sf::Time frameTime = sf::seconds(0.15f);
-int currentFrameIndex = 0;
+    sf::Texture PowerTex[4];
+    sf::Sprite PowerSp[4];
+    sf::Clock animationClock;
+    sf::Time frameTime = sf::seconds(0.15f);
+    int currentFrameIndex = 0;
 
 public:
     Life(int x = 0, int y = 0) {
@@ -321,7 +331,7 @@ public:
     }
 
     void loadSprites() override {
-        std::string paths[4] = 
+        std::string paths[4] =
         {
            "Data/collectibles/life full/life1.png",
             "Data/collectibles/life full/life2.png",
@@ -351,8 +361,17 @@ public:
         }
     }
 
-    bool collision(int& playerX, int& playerY) override {
-        return false;
+    bool collision(Player* player) override {
+        if (abs(player->getX() - s_position_x) < 40 && abs(player->getY() - s_position_y) < 40)
+        {
+            cout << "YAYYYYYYYYYYYY!!! COllison detected!!";
+            int r = player->getHp();
+            player->setHp(++r);
+            on = false;
+            return true;
+        }
+        else
+            return false;
     }
 
     void setPosition(int x, int y) override {
@@ -372,9 +391,9 @@ public:
     }
 
     void initializeGrid(char** lvl, int height, int width) override {
-        for (int i = 0;i < height;i++)
+        for (int i = 0; i < height; i++)
         {
-            lvl[height-5][130] = 'h';
+            lvl[height - 5][130] = 'h';
         }
     }
     void placeOnGrid(char** lvl, int height, int width, Life**& lifeArray, int& count)
